@@ -19,7 +19,7 @@ const IndexScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Button title="Add Post" onPress={addBlogPost} />
+      <Text style={styles.mainTitle}>Latest Posts</Text>
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -44,6 +44,15 @@ const IndexScreen = ({ navigation }) => {
   );
 };
 
+//Add to navigation bar
+IndexScreen["navigationOptions"] = ({ navigation }) => ({
+  headerRight: () => (
+    <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+      <Feather name="plus" size={30} />
+    </TouchableOpacity>
+  ),
+});
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
@@ -52,6 +61,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopWidth: 1,
     borderColor: "gray",
+  },
+  mainTitle: {
+    fontSize: 25,
+    paddingBottom: 15,
+    paddingTop: 5,
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 18,
