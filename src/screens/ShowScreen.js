@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Context } from "../context/BlogContext";
-import { Feather } from "@expo/vector-icons";
+import { EvilIcons } from "@expo/vector-icons";
 
 const ShowScreen = ({ navigation }) => {
   const { state } = useContext(Context);
@@ -21,8 +21,12 @@ const ShowScreen = ({ navigation }) => {
 //Add to navigation bar
 ShowScreen["navigationOptions"] = ({ navigation }) => ({
   headerRight: () => (
-    <TouchableOpacity onPress={() => navigation.navigate("Create")}>
-      <Feather name="edit" size={30} />
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Edit", { id: navigation.getParam("id") })
+      }
+    >
+      <EvilIcons name="pencil" size={30} />
     </TouchableOpacity>
   ),
 });
