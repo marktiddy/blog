@@ -1,57 +1,24 @@
-import React, { useState, useContext } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
 import { Context } from "../context/BlogContext";
+import BlogPostForm from "../Components/BlogPostForm";
 
 const EditScreen = ({ navigation }) => {
-  const { state } = useContext(Context);
-  const blogPost = state.find(
-    (blogPost) => blogPost.id === navigation.getParam("id")
-  );
-  const [title, setTitle] = useState(blogPost.title);
-  const [content, setcontent] = useState(blogPost.content);
+  const id = navigation.getParam("id");
+  const { state, editBlogPost } = useContext(Context);
+
+  const blogPost = state.find((blogPost) => blogPost.id === id);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Editing {blogPost.title}</Text>
-      <Text style={styles.editTitle}>Edit Title:</Text>
-      <TextInput
-        style={styles.input}
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <Text style={styles.editTitle}>Edit Content:</Text>
-      <TextInput
-        style={styles.input}
-        value={content}
-        onChangeText={(text) => setContent(text)}
-      />
-    </View>
+    <BlogPostForm
+      initialValues={{ title: blogPost.title, content: blogPost.content }}
+      onSubmit={(title, content) => {
+        editBlogPost(id, title, content, () => navigation.pop());
+      }}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  title: {
-    fontSize: 25,
-    paddingBottom: 10,
-  },
-  editTitle: {
-    fontSize: 20,
-    paddingBottom: 10,
-  },
-  input: {
-    fontSize: 18,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 15,
-    padding: 5,
-  },
-  label: {
-    fontSize: 20,
-    marginBottom: 5,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default EditScreen;

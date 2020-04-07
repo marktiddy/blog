@@ -13,7 +13,7 @@ const ShowScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{blogPost.title}</Text>
-      <Text>{blogPost.title}</Text>
+      <Text>{blogPost.content}</Text>
     </View>
   );
 };
