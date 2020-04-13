@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -15,7 +15,20 @@ const IndexScreen = ({ navigation }) => {
   //A variable to link useContext hook and our blogContext object
   //This will have the same value as our value prop so can include functions
   //Destructure to get both properties
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
+
+  useEffect(() => {
+    getBlogPosts();
+
+    //Reload state when we come back to the screen
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+    //Clean up from our listener when index screen is stopped
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <View>
